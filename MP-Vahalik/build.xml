@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." name="Recorder" default="jar">
+    <property name="java.src.dir" value="src" />
+    <property name="build.dir" location="out" />
+    <property name="classes.build.dir" location="${build.dir}/classes" />
+    <property name="jar.build.dir" location="${build.dir}/jar" />
+    <property name="doc.dest.dir" location="dokumentace" />
+    
+                                                              
+    <target name="compile"
+            description="Compile everything."
+     >
+	<mkdir dir="${classes.build.dir}" />
+	<javac
+                destdir="${classes.build.dir}"
+                debug="true"
+                includeantruntime="false">
+		<src path="${java.src.dir}" />
+		<compilerarg value="-Xlint:all"/>
+	</javac>
+     </target>
+  
+  <target name="jar" depends="compile">
+        <mkdir dir="${jar.build.dir}" />
+        <jar
+        	destfile="${jar.build.dir}/Recorder.jar"
+        >
+        <fileset dir="${classes.build.dir}" />
+        <manifest>
+        	<attribute name="Main-Class" value="alej.prog.vahalik.RecordApp" />
+        </manifest>
+        </jar>
+  </target>
+  <target name="doc" depends="compile" description="generate documentation">
+    <javadoc              
+      sourcepath="${java.src.dir}"
+      sourcefiles="${java.src.dir}/PaintReceiver.java,${java.src.dir}/Recorder.java,${java.src.dir}/RecordApp.java"
+      overview="dokumentace/overview.html"
+      destdir="${doc.dest.dir}"
+       />
+  </target>
+    
+</project>
